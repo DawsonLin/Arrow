@@ -1,0 +1,47 @@
+<template>
+    <!--列表条目组件,用于数据条目或详情页-->
+    <div class="c-line-table">
+        <ul class="list-box">
+            <slot></slot>
+        </ul>
+    </div>
+</template>
+<style lang="stylus" scoped>
+    .c-line-table{
+        table{
+            width: 96%;
+            margin:0;
+            padding:0;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 0 auto;
+            margin-bottom: 1.5em;
+            th{
+                background: #eff2f7;
+            }
+            th,td{
+                font-size: 1em;
+                padding: 0 1%;
+                height: 3em;
+                text-align: center;
+                box-sizing: border-box;
+                border :1px solid #c8cccf;
+            }
+        }
+    }
+
+</style>
+<script>
+
+    export default{
+        data(){
+            return{
+
+            }
+        },
+        components:{
+
+        }
+    }
+</script>
+

@@ -1,0 +1,6 @@
+
+import {http} from '../lib/http';
+
+export const api_test = function(){
+    return http("get|test");
+};

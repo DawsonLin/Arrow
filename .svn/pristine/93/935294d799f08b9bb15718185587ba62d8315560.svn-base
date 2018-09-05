@@ -1,0 +1,151 @@
+<template>
+
+    <mt-popup
+            class="ui-popup"
+            v-model="popupVisible"
+            position="bottom">
+        <div class="dialog">
+            <header class="header">
+                已绑定周转箱号( {{t}} )
+            </header>
+            <div class="table-box" ref="tab">
+                <div class="table">
+                    <span v-for="(item,index) in datas" :key="index" ref="item">{{item}}</span>
+                </div>
+            </div>
+            <div class="foot">
+                <span>周转箱号</span>
+                <input type="text" v-model="getInput">
+                <button type="button" @click="sure">确认</button>
+                <!--<div class="err" v-if="errmsg">{{errmsg}}</div>-->
+            </div>
+        </div>
+    </mt-popup>
+
+</template>
+
+<script>
+    import { Toast } from 'mint-ui';
+    export default {
+        data() {
+            return {
+                popupVisible:this.value,
+                t: 2,
+                datas:[1,12,1,6,6,6,6,9,99,635,459,524,59,4878,4878,979,5979,5979,4978],
+                getInput:'',
+                errmsg:'',
+            }
+        },
+        updated(){
+           let tab = this.$refs.tab.scrollHeight
+           let item = this.$refs.item
+           console.log(this.$refs.item)
+           console.log(tab)
+           if(tab>192){
+               console.log('yes')
+             for(let i=0;i<item.length;i++){
+                 item[i].style.width=86+'px'
+             }
+           }else{
+               console.log('xiaoyu')
+           }
+        },
+        methods: {
+            sure() {
+                console.log(Toast());
+                Toast({message: `已取消操作`, position: "top", duration: 1500});
+                console.log(1212);
+               // if(this.errmsg.length<=0){
+               //     this.errmsg='请输入周转箱号'
+               // }else {
+               //     this.$emit('get_bind_box',this.getInput)
+               // }
+
+            }
+        },
+        watch:{
+            popupVisible(val){
+                this.$emit('input',val)
+            },
+            value(val){
+                this.popupVisible = val;
+            },
+        },
+        props:{
+            value:Boolean,
+        },
+    }
+</script>
+
+<style scoped>
+.dialog{
+    width: 280px;
+    margin: 0 6px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 2px 1px #888;
+}
+.header{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.table-box{
+    width: 270px;
+    border: 1px solid #888;
+    align-self: flex-end;
+    /* display: flex; */
+    margin-top: 20px;
+     height: 192px;
+     overflow: auto;
+    /* border: 1px solid brown; */
+}
+.table-box::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+    background: seagreen;
+}
+.table{
+    display: flex;
+    flex-flow: wrap;
+}
+.table-box .table span{
+    border-right: 1px solid #888;
+    border-bottom:  1px solid #888;
+    width: 88px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #888;
+}
+.foot{
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+.foot button{
+    border: none;
+    outline: none;
+    height: 22px;
+    border-radius: 5px;
+    color: white;
+    line-height: 22px;
+    background: rgb(33, 170, 186);
+    text-align: center;
+}
+.foot input{
+    border: 1px solid   rgb(33, 170, 186);
+    width: 140px;
+    outline: none;
+    caret-color:  rgb(33, 170, 186);
+}
+.err{
+    position: absolute;
+    font-size: 12px;
+    color: red;
+}
+</style>

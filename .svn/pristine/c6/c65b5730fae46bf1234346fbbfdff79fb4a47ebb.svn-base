@@ -1,0 +1,28 @@
+/**
+ * Created by Administrator on 2017/12/23.
+ */
+
+module.exports = {
+    namespaced:true,
+    state:{
+        info:{}
+    },
+    mutations:{
+        set_info(state, info){
+            state.info = info;
+        }
+    },
+    actions:{
+        set_info({commit}, info){
+            commit('set_info', info);
+            console.log("info",info);
+        }
+    },
+    getters:{
+        info(state){
+            console.log(state.info);
+            return state.info;
+        },
+        // info:state=>state.info
+    }
+};

@@ -1,0 +1,117 @@
+<template>
+    <div class="out-box">
+        <div class="img">
+            <img :src="img" alt="">
+        </div>
+        <div class="right">
+            <div>
+                <span>品名 :&nbsp;</span>
+                <span>&nbsp;jjj</span>
+            </div>
+            <div class="mg">
+                <span>货位 :</span>
+                <span v-if="warehouseData.warehouse_cargo">&nbsp;&nbsp;{{warehouseData.warehouse_cargo}}</span>
+                <span v-else="warehouseData.warehouse_cargo_code">&nbsp;&nbsp;{{warehouseData.warehouse_cargo_code}}</span>
+            </div>
+            <div class="mg spe" @click="sku_box" style="width: 130px">
+                <div>
+                    SKU :&nbsp;
+                    <a href="javascript:;">{{warehouse.sku}}</a>
+                    <div style="margin-left: 33px">
+                        <span  v-for="(alia,i) in warehouse.sku_alia" :key="i">
+                            <a href="javascript:;">{{alia}}</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mg">
+                 <span>数量 :</span>
+                <span v-if="warehouseData.quantity">&nbsp;&nbsp;{{warehouseData.quantity}}</span>
+                <span v-else>&nbsp;&nbsp;{{warehouseData.quantity_cargo}}</span>
+            </div>
+        </div>
+        <slot></slot>
+        <!--<div>{{warehouse}}{{sku}}{{quantity}}</div>-->
+        <msgboxSku ref="sku_goods" v-model="skuShow" :sku="sku" :warehouse_id="this.$route.query.warehouse_id" @get-img="get_img"></msgboxSku>
+    </div>
+</template>
+
+<script>
+    import  msgboxSku from '@/components/msgbox-sku'
+    export default {
+        data(){
+            return {
+                warehouseData:[],
+                sku:'',
+                skuShow:false,
+                img:'',
+            }
+        },
+        mounted(){
+        },
+        methods: {
+            sku_box() {
+                this.skuShow=true;
+                this.$refs.sku_goods.init();
+            },
+            get_img(img){
+                console.log(img)
+                this.img=img
+            }
+        },
+        watch:{
+            warehouse(val){
+                console.log(val)
+                this.warehouseData = JSON.parse(JSON.stringify(val));
+                this.sku = this.warehouseData.sku;
+            },
+        },
+        props:['warehouse'],
+        components:{
+            msgboxSku
+        }
+    }
+</script>
+
+<style scoped>
+    .sku_name{
+        margin-left: 7px;
+    }
+.out-box{
+    width: 320px;
+    display: flex;
+    padding: 8px 42px 0px 42px;
+    /* border: 1px solid red; */
+    /*padding: 0 4px;*/
+    box-sizing: border-box;
+}
+.img{
+    width: 110px;
+    height: 110px;
+}
+.img img{
+    width: 100%;
+    height: 100%;
+}
+.right{
+    /* border: 1px solid; */
+    font-size: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 19px;
+}
+.right div.mg{
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+}
+.right div span{
+    height: 21px;
+}
+.right div.spe a{
+    color: rgb(31, 146, 192);
+    text-decoration: underline;
+}
+</style>
